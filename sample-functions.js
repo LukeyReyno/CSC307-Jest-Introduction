@@ -4,6 +4,8 @@ function sum(a, b) {
 }
 
 function div (a, b) {
+    if (b === 0)
+        throw new Error('Divide By Zero Error');
     return a / b;
 }
 
