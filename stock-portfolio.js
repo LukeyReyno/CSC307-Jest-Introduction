@@ -22,11 +22,20 @@ function removeStock(portfolio, stockName, numshares)
   const tickerIndex = portfolio.tickers.findIndex((ticker) => ticker.name == stockName);
   if (tickerIndex != -1)
   {
-    portfolio.tickers[tickerIndex].num -= numshares;
-    if (portfolio.tickers[tickerIndex].num <= 0)
+    
+    if (portfolio.tickers[tickerIndex].num - numshares == 0)
     {
+      portfolio.tickers[tickerIndex].num -= numshares;
       portfolio.tickers.splice(tickerIndex, 1);
       portfolio.numUniqueStocks--;
+    }
+    else if (portfolio.tickers[tickerIndex].num - numshares < 0)
+    {
+      throw new Error('ShareSaleException');
+    }
+    else
+    {
+      portfolio.tickers[tickerIndex].num -= numshares;
     }
   }
 }

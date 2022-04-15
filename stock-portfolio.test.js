@@ -55,3 +55,26 @@ test('Test lookup stockshares by stockname', () =>
   result = stockFunctions.checkShares(sp, "YUM");
   expect(result).toBe(10);
 });
+
+test('Test stock portfolio tickers get removed', () =>
+{
+  let sp = stockFunctions.createStockPortfolio();
+  stockFunctions.addStock(sp, "GME", 7);
+  expect(sp.tickers).toStrictEqual([{name: "GME", num: 7}]);
+  expect(sp.numUniqueStocks).toBe(1);
+
+  stockFunctions.removeStock(sp, "GME", 5);
+  expect(sp.tickers).toStrictEqual([{name: "GME", num: 2}]);
+
+  stockFunctions.removeStock(sp, "GME", 2);
+  expect(sp.tickers).toStrictEqual([]);
+
+  expect(sp.numUniqueStocks).toBe(0);
+});
+
+test('Test throw ShareSaleException when removing too many shares', () =>
+{
+  let sp = stockFunctions.createStockPortfolio();
+  stockFunctions.addStock(sp, "GME", 7);
+  expect(() => stockFunctions.removeStock(sp, "GME", 9)).toThrow(/ShareSaleException/);
+});
