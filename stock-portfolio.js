@@ -25,7 +25,6 @@ function removeStock(portfolio, stockName, numshares)
     
     if (portfolio.tickers[tickerIndex].num - numshares == 0)
     {
-      portfolio.tickers[tickerIndex].num -= numshares;
       portfolio.tickers.splice(tickerIndex, 1);
       portfolio.numUniqueStocks--;
     }
